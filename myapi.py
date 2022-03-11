@@ -34,12 +34,20 @@ def get_student_name(name: str):
             return students[student_id]
     return {"data": "Not found"}
 
-
 # Recommended pattern for queries on non-mandatory fields
 # Combining riquired field with non-mandatory field in the query
 @app.get("/get-by-name-optional")
 def get_student_name_optional(*,name: Optional[str] = None, age: int):
-    for student_id in students:
+     return get_data_by_name_or_age(name, age, students)
+
+def get_data_by_name_or_age(name: str, age: int, data):
+    for student_id in data:
         if students[student_id]["name"] == name or students[student_id]["age"] == age:
             return students[student_id]
+        if students[student_id]["name"] == name and students[student_id]["age"] == age:
+            return students[student_id]
     return {"data": "Not found"}
+
+
+
+
