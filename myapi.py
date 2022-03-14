@@ -40,7 +40,7 @@ def get_student_name(name: str):
 def get_student_name_optional(*,name: Optional[str] = None, age: int):
      return get_data_by_name_or_age(name, age, students)
 
-def get_data_by_name_or_age(name: str, age: int, data):
+def get_data_by_name_or_age(name: str, age: int, data) -> dict:
     for student_id in data:
         if students[student_id]["name"] == name or students[student_id]["age"] == age:
             return students[student_id]
