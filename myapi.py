@@ -34,11 +34,23 @@ def get_student_name(name: str):
             return students[student_id]
     return {"data": "Not found"}
 
+# combine path and query parameters the same logi that i used in fumction/ end-point in row 51
+
+
+@app.get("/get-by-name-id/{student_id}")
+def get_studant_with_id(*, student_id: int, name: Optional[str] = None):
+    for student_id in students:
+        if students[student_id]["name"] == name:
+            return students[student_id]
+    return {"data": "Not found"}
+
+
 # Recommended pattern for queries on non-mandatory fields
 # Combining riquired field with non-mandatory field in the query
 @app.get("/get-by-name-optional")
-def get_student_name_optional(*,name: Optional[str] = None, age: int):
-     return get_data_by_name_or_age(name, age, students)
+def get_student_name_optional(*, name: Optional[str] = None, age: int):
+    return get_data_by_name_or_age(name, age, students)
+
 
 def get_data_by_name_or_age(name: str, age: int, data) -> dict:
     for student_id in data:
@@ -47,7 +59,3 @@ def get_data_by_name_or_age(name: str, age: int, data) -> dict:
         if students[student_id]["name"] == name and students[student_id]["age"] == age:
             return students[student_id]
     return {"data": "Not found"}
-
-
-
-
