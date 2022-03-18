@@ -36,7 +36,14 @@ def index():
 
 @app.get("/get-student/{student_id}")
 def get_student(student_id: int = Path(None, description="Retrive the student ID", gt=0)):
-    return students[student_id]
+    if student_id in students:
+        return students[student_id]
+
+    return {"data": "Not found"}
+
+
+
+
 
 
 @app.get("/get-by-name")
@@ -96,3 +103,12 @@ def update_student(student_id: int, student:UpdateStudent):
         students[student_id].year = student.year
 
     return students[student_id]
+
+
+@app.delete("/delete-student/{student_id}")
+def delete_student(student_id:int):
+    if student_id not in students:
+        return {"Error": "Student does not exist"}
+
+    del students[student_id]
+    return {"Message": "Student deleted successfully"}
